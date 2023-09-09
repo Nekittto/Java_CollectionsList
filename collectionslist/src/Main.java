@@ -12,7 +12,14 @@ public class Main {
         String regexIndex = "[0-9]+";
         String regexText = "[\\s,a-z]+";
         String command = "";
-        String todo = null;
+        String todo = "";
+        System.out.println("Command list:" +
+                "\n LIST — lists the tasks with their task numbers." +
+                "\n ADD — adds the task to the end of the list or the case to a specific position." +
+                "\n EDIT — replaces the task with the specified number." +
+                "\n DELETE — deletes the task." +
+                "\n BREAK — close the app." +
+                "\n In case you need to replace/delete a task, write in this format \"command\" \"task number");
         while (true) {
             String input = scanner.nextLine();
             Pattern pCommand = Pattern.compile(regexCommand);
@@ -38,33 +45,39 @@ public class Main {
             }
             if (command.equals("ADD")) {
                 if (todo.isEmpty()){
-                    System.out.println("Ошибка: введите задачу латинскими буквами");
+                    System.out.println("Error: enter the task in Latin letters");
                 } else {
                     todoList.add(todo);
-                    System.out.println(todoList.getTodos().size() + " - кол-во задач");
+                    System.out.println(todoList.getTodoSize() + " - number of tasks");
                 }
             } else if (command.equals("DELETE")) {
-                todoList.delete(index - 1);
-                System.out.println(todoList.getTodos().size() + " - кол-во задач");
+                if (index == 0 | index > todoList.getTodoSize()){
+                    System.out.println("Error: Index out of bounds");
+                } else {
+                    todoList.delete(index - 1);
+                    System.out.println(todoList.getTodoSize() + " - number of tasks");
+                }
             } else if (command.equals("EDIT")) {
-                if (todo.isEmpty()){
-                    System.out.println("Ошибка: введите задачу латинскими буквами");
+                if (index == 0 | index > todoList.getTodoSize()){
+                    System.out.println("Error: Index out of bounds");
+                } else if (todo.isEmpty()){
+                    System.out.println("Error: enter the task in Latin letters");
                 } else {
                     todoList.edit(index - 1,todo);
-                    System.out.println(todoList.getTodos().size() + " - кол-во задач");
+                    System.out.println(todoList.getTodoSize() + " - number of tasks");
                 }
             } else if (command.equals("LIST")) {
                 todoList.getTodos();
             } else if (input.equals("HELP")) {
-                System.out.println(" LIST — выводит дела с их порядковыми номерами." +
-                        "\n ADD — добавляет дело в конец списка или дело на определённое место." +
-                        "\n EDIT — заменяет дело с указанным номером. " +
-                        "\n DELETE — удаляет задачу." +
-                        "\n BREAK — закрыть приложение.");
+                System.out.println(" LIST — lists the tasks with their task numbers." +
+                        "\n ADD — adds the task to the end of the list or the case to a specific position." +
+                        "\n EDIT — replaces the task with the specified number." +
+                        "\n DELETE — deletes the task." +
+                        "\n BREAK — close the app.");
             } else if (input.equals("BREAK")) {
                 break;
             } else {
-                System.out.println("Ошибка ввода: введите \"HELP\" для списка команд");
+                System.out.println("Input error: enter \"HELP\" for the list of commands");
             }
 
         }

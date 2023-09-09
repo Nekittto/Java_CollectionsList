@@ -33,7 +33,9 @@ public class TodoList {
         // TODO: удалить дело находящееся по переданному индексу,
         //  проверьте возможность удаления дела
     }
-
+    public int getTodoSize(){
+        return Todo.size();
+    }
     public ArrayList<String> getTodos() {
         // TODO: вернуть список делa
         for (int i = 0; i < Todo.size(); i++) {
